@@ -1,7 +1,7 @@
-import { applet } from './applet';
+import { Applet } from './applet';
 
 export class Library
 {
   categories:string[] = [];
-  applets:applet[] = [];
+  applets:Applet[] = [];
 }

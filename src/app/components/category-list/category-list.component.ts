@@ -10,7 +10,7 @@ import { Category } from 'src/app/models/category';
 export class CategoryListComponent implements OnInit {
 
   categories: Category[];
-
+  selectedCategoryAppletNames: string[];
   constructor() {
 
   }
@@ -18,5 +18,8 @@ export class CategoryListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  selectCategory(category: Category){
+     this.selectedCategoryAppletNames = ["Applet" + category.name];
+  }
 
 }

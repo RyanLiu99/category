@@ -1,4 +1,4 @@
-export class applet
+export class Applet
 {
   name: string;
   categories:string[];
