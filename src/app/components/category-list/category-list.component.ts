@@ -5,12 +5,14 @@ import { KeyValue } from '@angular/common';
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css'],
-  inputs: ['categories']
+  inputs: ['categories', 'currentCategory']
 })
 export class CategoryListComponent {
 
-  categories: KeyValue<string, number>[];
+  currentCategory: string;
+  categories: KeyValue<string, number>[] = [];
   @Output() categoryChanged = new EventEmitter<string>();
+
   constructor() {
 
   }

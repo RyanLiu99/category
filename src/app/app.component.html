@@ -5,8 +5,10 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-6">
-      <input #searchBox (input)="searchTextChanged(searchBox.value)" />
-      <app-category-list [categories]="visibleCategories" (categoryChanged)="selectedCategory($event)" ></app-category-list>
+      <input #searchBox (input)="searchTextChanged(searchBox.value)" placeholder="Search applets" />
+      <app-category-list [categories]="visibleCategories"
+      [currentCategory] = "currentCategory"
+      (categoryChanged)="selectedCategory($event)" ></app-category-list>
     </div>
     <div class="col-xs-6">
       <app-applet-list [appletNames]="visibleAppletNames"></app-applet-list>

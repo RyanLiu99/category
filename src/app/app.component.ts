@@ -22,7 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   searchText$ : Observable<string>;
   category$ : Observable<string>;
-  visibleCategories: KeyValue<string, number>[] = [];
+  currentCategory : string;
+  visibleCategories: KeyValue<string, number>[]
   visibleAppletNames: string[] = [];
 
   constructor(private libService: LibService) {
@@ -55,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
       (searchText, category) => new Filter( searchText, category))
     .pipe(
       debounceTime(200),
-      map( (filter: Filter) => this.search(filter))
+      map( (filter: Filter) => this.libService.search(filter))
 
     );
 
@@ -65,14 +66,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.selectedCategory(null)
   }
 
-  private search(filter: Filter) : LibSearchResult{
-     return this.libService.search(filter);
-  }
 
   private show(libSearchResult: LibSearchResult) {
+    this.currentCategory = libSearchResult.filter.categoryName;
     this.visibleCategories = libSearchResult.categoriesWithCount;
     this.visibleAppletNames = libSearchResult.applets.map(a => a.name);
   }
-
 
 }

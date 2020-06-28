@@ -1,7 +1,7 @@
 <ul class="list-group">
   <li *ngFor="let category of categories"
   (click)="selectCategory(category)"
-  >
-    {{category.key}} {{category.value}}</li>
+  [class.selected]="category.key===currentCategory">
+    {{category.key}} <span class="badge badge-pill badge-secondary">{{category.value}}</span>
+  </li>
 </ul>
-

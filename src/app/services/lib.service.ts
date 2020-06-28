@@ -36,7 +36,7 @@ export class LibService {
       ]
     };
 
-    this.addBigData(this.lib, 100, 5000);
+    //this.addBigData(this.lib, 100, 5000);
   }
 
   //It can also return Observable<> or Promise<> if search is done on server side
@@ -51,7 +51,7 @@ export class LibService {
     if (!!filter.categoryName) {
       applets = applets.filter( a => a.categories.indexOf(filter.categoryName) != -1)
     }
-    return new LibSearchResult(applets, categories);
+    return new LibSearchResult(applets, categories, filter);
   }
 
 

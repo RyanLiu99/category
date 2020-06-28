@@ -1,0 +1,6 @@
+
+li:hover {background-color: #607D8B;}
+
+li.selected {
+  background-color: darkblue;
+}
