@@ -12,6 +12,7 @@ export class AppletListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

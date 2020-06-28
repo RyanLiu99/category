@@ -2,7 +2,14 @@
 
 <h2>Categories</h2>
 
-<input type="text" [(ngModel)]="searchText"/>
-<app-category-list [categories]="visibleCategories"></app-category-list>
-
-<app-applet-list></app-applet-list>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6">
+      <input #searchBox (input)="searchTextChanged(searchBox.value)" />
+      <app-category-list [categories]="visibleCategories" (categoryChanged)="selectedCategory($event)" ></app-category-list>
+    </div>
+    <div class="col-xs-6">
+      <app-applet-list [appletNames]="visibleAppletNames"></app-applet-list>
+    </div>
+  </div>
+</div>

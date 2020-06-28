@@ -1,17 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Library } from '../models/library';
+import { Filter } from '../models/filter';
+import { Observable, of } from 'rxjs';
+import { Applet } from '../models/applet';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LibService {
-  constructor() { }
 
-  getLibrary(): Library {
-    let lib = new Library();
-    this.addBigData(lib, 100, 5000);
-    return lib;
+  private lib: Library;
+
+  constructor() {
+    this.lib = new Library();
+    this.addBigData(this.lib, 100, 5000);
   }
+
+  //It can also return Observable<Applet[]> if search is done on server side
+  search(filter: Filter): Applet[] {
+    let result = this.lib.applets;
+    if (!!filter.searchText) {
+      result = result.filter(a => a.name.indexOf(filter.searchText) !== -1);
+    }
+    if (!!filter.category) {
+      result = result.filter(a => a.categories.indexOf(filter.category) !== -1);
+    }
+    return result;
+  }
+
 
   private addBigData(lib: Library, ncategs: number, napplets: number) {
     for (var i = 0; i < ncategs; i++) {

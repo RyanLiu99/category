@@ -1,9 +1,7 @@
-
-<ul>
-  <li *ngFor="let category of categories" (click)="selectCategory(category)" >
+<ul class="list-group">
+  <li *ngFor="let category of categories"
+  (click)="selectCategory(category)"
+  >
     {{category.name}} {{category.count}}</li>
 </ul>
 
-<div>
-  <app-applet-list [appletNames]="selectedCategoryAppletNames" ></app-applet-list>
-</div>

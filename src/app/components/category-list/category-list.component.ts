@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Category } from 'src/app/models/category';
 
 @Component({
@@ -10,7 +10,7 @@ import { Category } from 'src/app/models/category';
 export class CategoryListComponent implements OnInit {
 
   categories: Category[];
-  selectedCategoryAppletNames: string[];
+  @Output() categoryChanged = new EventEmitter<string>();
   constructor() {
 
   }
@@ -19,7 +19,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   selectCategory(category: Category){
-     this.selectedCategoryAppletNames = ["Applet" + category.name];
+     this.categoryChanged.emit(category.name);
   }
 
 }
