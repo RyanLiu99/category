@@ -36,7 +36,7 @@ export class LibService {
       ]
     };
 
-    //this.addBigData(this.lib, 100, 5000);
+    this.addBigData(this.lib, 100, 5000);
   }
 
   //It can also return Observable<> or Promise<> if search is done on server side
@@ -51,12 +51,6 @@ export class LibService {
     if (!!filter.categoryName) {
       applets = applets.filter( a => a.categories.indexOf(filter.categoryName) != -1)
     }
-
-    // categories.sort((kv1, kv2) => {
-    //   if (kv1.key > kv2.key) return 1;
-    //   else if (kv1.key < kv2.key) return -1;
-    //   else return 0;
-    // });
     return new LibSearchResult(applets, categories);
   }
 
@@ -119,5 +113,4 @@ export class LibService {
       lib.applets.push(a);
     }
   }
-
 }
