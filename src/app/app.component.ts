@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { LibService } from './services/lib.service';
-import { Category } from './models/category';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, map
@@ -43,19 +42,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchText$ = this.searchTextSubject.pipe(
-      debounceTime(300),
+      debounceTime(200),
       distinctUntilChanged()
     )
 
     this.category$ = this.currentCategorySubject.pipe(
-      debounceTime(300),
+      debounceTime(200),
       distinctUntilChanged()
     );
 
     let filter$ = combineLatest( this.searchText$,  this.category$,
       (searchText, category) => new Filter( searchText, category))
     .pipe(
-      debounceTime(300),
+      debounceTime(200),
       map( (filter: Filter) => this.search(filter))
 
     );
@@ -71,7 +70,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private show(libSearchResult: LibSearchResult) {
-    console.log("show", libSearchResult);
     this.visibleCategories = libSearchResult.categoriesWithCount;
     this.visibleAppletNames = libSearchResult.applets.map(a => a.name);
   }

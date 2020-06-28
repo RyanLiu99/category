@@ -4,9 +4,6 @@ import { Filter } from '../models/filter';
 import { Applet } from '../models/applet';
 import { LibSearchResult } from '../models/lib-search-result';
 import { KeyValue } from '@angular/common';
-import { Category } from '../models/category';
-import { Key } from 'protractor';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 @Injectable({
   providedIn: 'root'
@@ -40,21 +37,20 @@ export class LibService {
     };
 
     //this.addBigData(this.lib, 100, 5000);
-    //this.restructureData(this.lib);
   }
 
   //It can also return Observable<> or Promise<> if search is done on server side
   search(filter: Filter): LibSearchResult {
-    console.log("search", filter);
-
     let applets = this.filterBySearchTerm(filter.searchText);
-
     let categories = this.countForCategories(applets);
+
+    if(!!filter.searchText) {
+      categories = this.removeEmptyCategories(categories);
+    }
 
     if (!!filter.categoryName) {
       applets = applets.filter( a => a.categories.indexOf(filter.categoryName) != -1)
     }
-
 
     // categories.sort((kv1, kv2) => {
     //   if (kv1.key > kv2.key) return 1;
@@ -64,9 +60,15 @@ export class LibService {
     return new LibSearchResult(applets, categories);
   }
 
+
+  private removeEmptyCategories(categories: KeyValue<string, number>[]) : KeyValue<string, number>[] {
+    return categories.filter(c => c.value > 0);
+  }
+
   private filterBySearchTerm(searchText: string): Applet[] {
     //cached, used that
     if (!!this.filteredAgainstSearchTermResult && !!searchText && this.lastSearchTerm === searchText) {
+      console.log("cache used");
       return this.filteredAgainstSearchTermResult;
     }
 
@@ -75,41 +77,13 @@ export class LibService {
     } else {
       //put in cache
       this.lastSearchTerm = searchText;
-      this.filteredAgainstSearchTermResult = this.lib.applets.filter(a => a.name.indexOf(searchText) !== -1);
+      this.filteredAgainstSearchTermResult = this.lib.applets
+      .filter(a => a.name.toLowerCase().indexOf(searchText) !== -1);
       return this.filteredAgainstSearchTermResult;
     }
-
   }
 
-  // // I can change addBigData so avoid calling restructureFData
-  // //But let's assume lib: Library is the data come from server
-  // //and I cannot change the data structure, so I have to get it and restructure it.
-  // private restructureData(lib: Library) {
-  //   lib.categoryXes = lib.categories.map(categoryName => new Category(categoryName));
-  //   lib.applets.forEach(a => {
-  //     if (!!a.categories && a.categories.length > 0) {
-  //       a.categories.forEach(categoryName => {
-  //         const categories = lib.categoryXes.filter(c => c.name === categoryName);
-  //         if (categories.length === 1) {
-  //           categories[0].applets.push(a);
-  //         } else if (categories.length == 0) {
-  //           throw new Error(`${a.name} belongs to unknown category: ${categoryName}`);
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-
-  // private addMissingCategories(categories: KeyValue<string, number>[]): void {
-  //   console.log("add missing categories");
-  //   let includedNames = categories.map(c => c.key);
-  //   this.lib.categories.filter(cname => includedNames.indexOf(cname) == -1).forEach(cname => {
-  //     categories.push({ key: cname, value: 0 });
-  //   })
-  // }
-
   private countForCategories(applets: Applet[]): KeyValue<string, number>[] {
-
     const result = this.lib.categories.map(
       categoryName => { return { key: categoryName, value: 0 } });
 
