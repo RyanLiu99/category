@@ -1,16 +1,19 @@
 <h1>Library</h1>
 
-<h2>Categories</h2>
+
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-6 px-xs-2">
+      <h2>Categories</h2>
       <input #searchBox (input)="searchTextChanged(searchBox.value)" placeholder="Search applets" />
+
       <app-category-list [categories]="visibleCategories"
       [currentCategory] = "currentCategory"
       (categoryChanged)="selectedCategory($event)" ></app-category-list>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-6 px-md-5">
+      <h2>Applets</h2>
       <app-applet-list [appletNames]="visibleAppletNames"></app-applet-list>
     </div>
   </div>

@@ -1,6 +1,6 @@
 
-li:hover {background-color: #607D8B;}
+li:hover {background-color: #d4e7f7;}
 
 li.selected {
-  background-color: darkblue;
+  background-color: #106ebe;
 }
