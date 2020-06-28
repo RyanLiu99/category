@@ -1,8 +1,12 @@
+import { Applet } from './applet';
+
 export class Category {
 
-  count: number = 0;
+
+  //reference to Applet instead of appletName
+  //because a reference uses less memory than string
+  applets : Applet[] = [];
 
   constructor(public name: string){
-
   }
 }

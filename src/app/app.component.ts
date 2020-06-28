@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { LibService } from './services/lib.service';
 import { Category } from './models/category';
 import { Observable, Subject, combineLatest } from 'rxjs';
@@ -7,13 +7,15 @@ import {
 } from 'rxjs/operators';
 import { Filter } from './models/filter';
 import { Applet } from './models/applet';
+import { LibSearchResult } from './models/lib-search-result';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   private currentCategoryName: string | null;
   private searchTextSubject = new Subject<string>();
@@ -21,10 +23,14 @@ export class AppComponent implements OnInit {
 
   searchText$ : Observable<string>;
   category$ : Observable<string>;
-  visibleCategories: Category[] = [];
+  visibleCategories: KeyValue<string, number>[] = [];
   visibleAppletNames: string[] = [];
 
   constructor(private libService: LibService) {
+  }
+
+  ngOnDestroy(): void {
+    //not really need unsubscribe since the subscription will gone with this component
   }
 
   searchTextChanged(searchText: string) {
@@ -36,13 +42,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.searchText$ = this.searchTextSubject.pipe(
       debounceTime(300),
       distinctUntilChanged()
     )
 
-    this.category$ = this.searchTextSubject.pipe(
+    this.category$ = this.currentCategorySubject.pipe(
       debounceTime(300),
       distinctUntilChanged()
     );
@@ -55,22 +60,21 @@ export class AppComponent implements OnInit {
 
     );
 
-    filter$.subscribe( applets => this.showApplets(applets) )
+    filter$.subscribe( libSearchResult => this.show(libSearchResult) )
 
     this.searchTextChanged(null);
     this.selectedCategory(null)
-
   }
 
-
-  private search(filter: Filter) : Applet[]{
-    console.log("search", filter);
+  private search(filter: Filter) : LibSearchResult{
      return this.libService.search(filter);
   }
 
-  private showApplets(applets : Applet[]) {
-    console.log("showApplets", applets);
-    this.visibleCategories = [];
-    this.visibleAppletNames = applets.map(a => a.name);
+  private show(libSearchResult: LibSearchResult) {
+    console.log("show", libSearchResult);
+    this.visibleCategories = libSearchResult.categoriesWithCount;
+    this.visibleAppletNames = libSearchResult.applets.map(a => a.name);
   }
+
+
 }

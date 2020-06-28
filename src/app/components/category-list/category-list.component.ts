@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Category } from 'src/app/models/category';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-category-list',
@@ -9,7 +10,7 @@ import { Category } from 'src/app/models/category';
 })
 export class CategoryListComponent implements OnInit {
 
-  categories: Category[];
+  categories: KeyValue<string, number>[];
   @Output() categoryChanged = new EventEmitter<string>();
   constructor() {
 
@@ -18,8 +19,8 @@ export class CategoryListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  selectCategory(category: Category){
-     this.categoryChanged.emit(category.name);
+  selectCategory(category: KeyValue<string, number>){
+     this.categoryChanged.emit(category.key);
   }
 
 }
