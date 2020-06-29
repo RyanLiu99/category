@@ -8,9 +8,9 @@
   * distinctUntilChanged
   * combineLatest
 
-to reduce unnecessary search.
+to reduce unnecessary repetitive search.
 
-* Cache filter result based on search term, so when user click around category, no need filter by search term anymore.  I assume the user will be changing category more often than changing search term.
+* Cache filter result based on search term, so when the user clicks around at category, no need filter by search term again.  I assume the user will be changing category more often than changing search term.
 
 It preforms very well on my local machine for 100 categories and 5000 applets.
 
@@ -24,7 +24,7 @@ It is implemented so that search term is case-insensitive and it will return any
 
 ## UI: Category and Applets stay in sync
 
-A category will not be highlighted until search is done. This is to avoid while filtering data, the current category and applets are out of sync.
+A category will not be highlighted until search is done. This is to avoid the case while filtering data, the current category and applets are out of sync.
 
 ### UI: suggestions
 
