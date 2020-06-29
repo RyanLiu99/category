@@ -1,7 +1,13 @@
-<ul class="pt-md-2">
-  <li *ngFor="let category of categories"
+<div class="p-md-2">
+  <p *ngFor="let category of categories"
   (click)="selectCategory(category)"
+  class="my-md-1 p-md-2"
   [class.selected]="category.key===currentCategory">
-    {{category.key}} <span class="badge badge-pill badge-secondary">{{category.value}}</span>
-  </li>
-</ul>
+    {{category.key}}
+
+    <span class="badge badge-pill"
+    [class.badge-secondary]="category.key!==currentCategory"
+    [class.badge-light]="category.key===currentCategory"
+    >{{category.value}}</span>
+</p>
+</div>
