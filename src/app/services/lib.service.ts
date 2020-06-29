@@ -8,6 +8,7 @@ import { KeyValue } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
+
 export class LibService {
   private lib: Library;
 
@@ -36,7 +37,7 @@ export class LibService {
       ]
     };
 
-    this.addBigData(this.lib, 100, 5000);
+    this.addBigData(this.lib, 5, 10);
   }
 
   //It can also return Observable<> or Promise<> if search is done on server side
@@ -44,6 +45,7 @@ export class LibService {
     let applets = this.filterBySearchTerm(filter.searchText);
     let categories = this.countForCategories(applets);
 
+    //count should done before filter by category
     if(!!filter.searchText) {
       categories = this.removeEmptyCategories(categories);
     }
@@ -77,6 +79,7 @@ export class LibService {
     }
   }
 
+  //added code to make applet's categories distinct.
   private countForCategories(applets: Applet[]): KeyValue<string, number>[] {
     const result = this.lib.categories.map(
       categoryName => { return { key: categoryName, value: 0 } });
@@ -92,7 +95,6 @@ export class LibService {
         }
       })
     })
-
     return result;
   }
 
@@ -106,10 +108,16 @@ export class LibService {
         name: 'CMS' + i,
         categories: []
       };
+
+
+      let positions : number[] = [];
       for (var j = 0; j < Math.floor(Math.random() * 10); ++j) {
         var idx = Math.floor(Math.random() * n) % n;
-        a.categories.push(lib.categories[idx]);
+        positions.push(idx);
       }
+      //make categories unique for an applet
+      positions = positions.filter( (v, index, a )=> a.indexOf(v) === index );
+      a.categories.push(...positions.map(p => lib.categories[p]));
       lib.applets.push(a);
     }
   }
