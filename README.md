@@ -1,27 +1,23 @@
-# RyanliuInvestcloud
+# Ryan Liu
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.9.
+## Performance Consideration
 
-## Development server
+* Uses RxJs functions like
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+  * debounceTime
+  * distinctUntilChanged
+  * combineLatest
 
-## Code scaffolding
+to reduce unnecessary search.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Cache filter result based on search term, so when user click around category, no need filter by search term anymore.  I assume the user will be changing category more often than changing search term.
 
-## Build
+It preforms very well on my local machine for 100 categories and 5000 applets.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Bug in addBigData()
 
-## Running unit tests
+ I improved addBigData() method, to avoid adding duplicated category name into one applet.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## UI: Category and Applets stay in sync
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+A category will not be highlighted until search is done. This is to avoid while filtering data, the current category and applets are out of sync.

@@ -37,7 +37,7 @@ export class LibService {
       ]
     };
 
-    this.addBigData(this.lib, 5, 10);
+    this.addBigData(this.lib, 100, 5000);
   }
 
   //It can also return Observable<> or Promise<> if search is done on server side
