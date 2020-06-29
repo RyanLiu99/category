@@ -30,3 +30,4 @@ A category will not be highlighted until search is done. This is to avoid while 
 
 * Add a "x" badge to remove search term.
 * Add button to remove category filter. E.g. "All Categories" at the top. 
+
