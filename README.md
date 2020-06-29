@@ -14,6 +14,10 @@ to reduce unnecessary search.
 
 It preforms very well on my local machine for 100 categories and 5000 applets.
 
+## Case-insensitive and partial search
+
+It is implemented so that search term is case-insensitive and it will return any applet whose name contains the search term.
+
 ## Bug in addBigData()
 
  I improved addBigData() method, to avoid adding duplicated category name into one applet.
