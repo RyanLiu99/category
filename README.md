@@ -25,3 +25,8 @@ It is implemented so that search term is case-insensitive and it will return any
 ## UI: Category and Applets stay in sync
 
 A category will not be highlighted until search is done. This is to avoid while filtering data, the current category and applets are out of sync.
+
+### UI: suggestions
+
+* Add a "x" badge to remove search term.
+* Add button to remove category filter. E.g. "All Categories" at the top. 
